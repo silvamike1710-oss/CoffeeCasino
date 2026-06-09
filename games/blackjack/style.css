@@ -1,0 +1,106 @@
+ @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'VT323', monospace; }
+  .win95-btn {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    background: #c0c0c0;
+    color: #000;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    padding: 4px 16px;
+    cursor: pointer;
+    min-width: 80px;
+  }
+  .win95-btn:active {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+  }
+  .win95-btn:disabled {
+    color: #808080;
+    cursor: default;
+  }
+  .window {
+    background: #c0c0c0;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    padding: 2px;
+    margin-bottom: 8px;
+  }
+  .title-bar {
+    background: #000080;
+    color: #fff;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    padding: 2px 6px;
+    margin-bottom: 6px;
+  }
+  .inset {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    padding: 8px;
+    background: #1a5c1a;
+  }
+  .card {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 52px;
+    height: 74px;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 3px 4px;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    margin: 3px;
+    vertical-align: top;
+    box-shadow: 2px 2px 0 #000;
+    flex-shrink: 0;
+  }
+  .card.hidden {
+    background: #000080;
+    background-image: repeating-linear-gradient(
+      45deg, #000070 0, #000070 3px, #000090 3px, #000090 6px
+    );
+  }
+  .card.red { color: #cc0000; }
+  .card .top { text-align: left; line-height: 1; }
+  .card .bot { text-align: right; transform: rotate(180deg); line-height: 1; }
+  .card .mid { text-align: center; font-size: 22px; flex: 1; display: flex; align-items: center; justify-content: center; }
+  .hand-area { min-height: 90px; display: flex; flex-wrap: wrap; align-items: flex-start; }
+  .score-label { font-family: 'VT323', monospace; color: #ffff00; font-size: 20px; margin-bottom: 4px; }
+  .hand-label { font-family: 'VT323', monospace; color: #c0ffc0; font-size: 16px; margin-bottom: 2px; }
+  .msg-box {
+    font-family: 'VT323', monospace;
+    font-size: 22px;
+    color: #ffff00;
+    text-align: center;
+    min-height: 28px;
+    padding: 2px;
+  }
+  .chips-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .chip {
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 3px dashed rgba(255,255,255,0.6);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    transition: transform 0.1s;
+    flex-shrink: 0;
+  }
+  .chip:hover { transform: scale(1.1); }
+  .chip:active { transform: scale(0.95); }
+  .stat { font-family: 'VT323', monospace; font-size: 16px; color: #000; }

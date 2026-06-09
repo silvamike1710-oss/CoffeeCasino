@@ -159,13 +159,13 @@
 
   .lobby-header {
     background: #8b0000;
-    padding: 20px 16px 16px;
+    padding: 1px 16px 16px;
     text-align: center;
     border-bottom: 3px solid #4a0000;
   }
 
   .lobby-title {
-    font-size: 42px;
+    font-size: 40px;
     color: #ffd700;              /* Gold — classic casino color */
     text-shadow: 2px 2px #000;
     letter-spacing: 3px;
@@ -173,7 +173,7 @@
   }
 
   .lobby-subtitle {
-    font-size: 18px;
+    font-size: 17px;
     color: #ffaaaa;
     letter-spacing: 2px;
     margin-top: 4px;

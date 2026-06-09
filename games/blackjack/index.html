@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoffeeJack</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="window">
+
+    <!-- Title Bar -->
+    <div class="title-bar">
+        CoffeeJack Blackjack
+    </div>
+
+    <!-- Back to lobby -->
+    <div style="margin-bottom:8px;">
+        <button
+            class="win95-btn"
+            onclick="location.href='../../index.html'"
+        >
+            ◀ LOBBY
+        </button>
+    </div>
+
+    <!-- Dealer Area -->
+    <div class="window">
+
+        <div class="title-bar">
+            Dealer
+        </div>
+
+        <div class="inset">
+
+            <div
+                class="score-label"
+                id="dealer-score"
+            >
+                ?
+            </div>
+
+            <div
+                class="hand-area"
+                id="dealer-hand"
+            ></div>
+
+        </div>
+
+    </div>
+
+    <!-- Player Area -->
+    <div class="window">
+
+        <div class="title-bar">
+            Player
+        </div>
+
+        <div class="inset">
+
+            <div
+                class="score-label"
+                id="player-score"
+            >
+                0
+            </div>
+
+            <div
+                class="hand-area"
+                id="player-hand"
+            ></div>
+
+        </div>
+
+    </div>
+
+    <!-- Message Box -->
+
+    <div class="window">
+
+        <div
+            class="msg-box"
+            id="msg-box"
+        >
+            PLACE YOUR BET TO START
+        </div>
+
+    </div>
+
+    <!-- Betting -->
+
+    <div class="window">
+
+        <div class="title-bar">
+            Betting
+        </div>
+
+        <div
+            class="chips-row"
+            style="padding:8px;"
+        >
+
+            <button
+                class="win95-btn"
+                onclick="changeBet(-5)"
+            >
+                -5
+            </button>
+
+            <span class="stat">
+                Bet:
+                <span id="bet-display">0</span>
+            </span>
+
+            <button
+                class="win95-btn"
+                onclick="changeBet(5)"
+            >
+                +5
+            </button>
+
+            <button
+                class="win95-btn"
+                onclick="clearBet()"
+            >
+                Clear
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Actions -->
+
+    <div
+        class="chips-row"
+        style="margin-bottom:8px;"
+    >
+
+        <button
+            class="win95-btn"
+            id="deal-btn"
+            onclick="deal()"
+        >
+            Deal
+        </button>
+
+        <button
+            class="win95-btn"
+            id="hit-btn"
+            onclick="hit()"
+            disabled
+        >
+            Hit
+        </button>
+
+        <button
+            class="win95-btn"
+            id="stand-btn"
+            onclick="stand()"
+            disabled
+        >
+            Stand
+        </button>
+
+        <button
+            class="win95-btn"
+            id="double-btn"
+            onclick="doubleDown()"
+            disabled
+        >
+            Double
+        </button>
+
+    </div>
+
+    <!-- Stats -->
+
+    <div class="window">
+
+        <div class="title-bar">
+            Status
+        </div>
+
+        <div style="padding:8px;">
+
+            <div class="stat">
+                Money:
+                $<span id="money-display">0</span>
+            </div>
+
+            <div class="stat">
+                Chips:
+                <span id="chips-display">200</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../../js/state.js"></script>
+<script src="../../js/storage.js"></script>
+<script src="../../js/ui.js"></script>
+<script src="script.js"></script>
+
+<script>
+loadState();
+updateUI();
+</script>
+
+</body>
+</html>
