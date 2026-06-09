@@ -1,65 +1,80 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- app root 
-     everything inside #app. Switches between screens by adding/removing
-     the "active class"
-     -->
+
+    <!-- App container -->
     <div id="app">
 
-        <!-- toast notification (floats above everything) -->
-         <div id="toast"></div>
+        <!-- Floating notifications -->
+        <div id="toast"></div>
 
-         <div class="title-bar">
+        <!-- Window title bar -->
+        <div class="title-bar">
             <div class="title-bar-left">
                 <span class="title-icon">🎰</span>
-                <span id="title-bar-text">CoffeeCasino v1.0</span>
+                <span>CoffeeCasino v1.0</span>
             </div>
+
             <div>
                 <span class="title-btn">_</span>
                 <span class="title-btn">X</span>
             </div>
-         </div>
+        </div>
 
-         <!-- Screen 1: lobby -->
-          <div id="lobby" class="screen active">
+        <!-- ==========================
+             LOBBY SCREEN
+        =========================== -->
+        <div id="lobby">
+
             <div class="lobby-header">
-                <div class="lobby-title"> CASINO </div>
-                <div class="lobby-subtitle"> HAVE A SIP OF GAMBLING v1.0</div>
+                <div class="lobby-title">CASINO</div>
+                <div class="lobby-subtitle">
+                    HAVE A SIP OF GAMBLING v1.0
+                </div>
             </div>
 
             <hr class="lobby-divider">
 
-            <!-- games section -->
-            <div class="lobby-section-title">SELECT GAME</div>
+            <!-- Game Selection -->
+            <div class="lobby-section-title">
+                SELECT GAME
+            </div>
+
             <div class="games-grid">
-                <!-- Slot machine -->
-                 <div class="game-card" onclick="goToSlots()">
+
+                <!-- Slots -->
+                <div
+                    class="game-card"
+                    onclick="location.href='games/slots/index.html'"
+                >
                     <span class="game-icon">🎰</span>
                     <div class="game-name">SLOTS</div>
                     <div class="game-badge">PLAY</div>
-                 </div>
-               <!-- Blackjack - (placeholder) -->
-                <div class="game-card disabled">
+                </div>
+
+                <!-- Future Games -->
+
+                <div class="game-card disabled"
+                    class="game-card"
+                    onclick="location.href='games/blackjack/index.html'"
+                >
                     <span class="game-icon">🃏</span>
                     <div class="game-name">BLACKJACK</div>
                     <div class="game-badge soon">SOON</div>
                 </div>
 
-                <!-- Roulette - (placeholder) -->
                 <div class="game-card disabled">
                     <span class="game-icon">🎡</span>
                     <div class="game-name">ROULETTE</div>
                     <div class="game-badge soon">SOON</div>
                 </div>
 
-                <!-- Poker - (placeholder) -->
                 <div class="game-card disabled">
                     <span class="game-icon">♠️</span>
                     <div class="game-name">POKER</div>
@@ -67,119 +82,121 @@
                 </div>
 
             </div>
-             
+
             <hr class="lobby-divider">
 
-            <!-- cashier sction -->
+            <!-- ==========================
+                 CASHIER
+            =========================== -->
 
-            <div class="lobby-section-title">CASHIER</div>
+            <div class="lobby-section-title">
+                CASHIER
+            </div>
+
             <div class="cashier-window">
 
+                <!-- Current money -->
                 <div class="cashier-row">
-                    <span class="cashier-label">WALLET:</span>
-                    <span style="color: #000; font-size:18px;">$<span id="cashier-money-display">0</span></span>
+                    <span class="cashier-label">
+                        WALLET:
+                    </span>
+
+                    <span style="color:#000;font-size:18px;">
+                        $<span id="cashier-money-display">0</span>
+                    </span>
                 </div>
 
+                <!-- Buy chips -->
                 <div class="cashier-row">
-                    <span class="cashier-label">BUY:</span>
-                    <select id="chip-package" class="cashier-select">
-                        <option value="10">10 chips = $5</option>
-                        <option value="25">25 chips = $10</option>
-                        <option value="50">50 chips = $20</option>
-                        <option value="100">100 chips = $35</option>
+                    <span class="cashier-label">
+                        BUY:
+                    </span>
+
+                    <select
+                        id="chip-package"
+                        class="cashier-select"
+                    >
+                        <option value="10">
+                            10 chips = $5
+                        </option>
+
+                        <option value="25">
+                            25 chips = $10
+                        </option>
+
+                        <option value="50">
+                            50 chips = $20
+                        </option>
+
+                        <option value="100">
+                            100 chips = $35
+                        </option>
                     </select>
                 </div>
 
-                <button class="cashier-btn" onclick="buyChips()">EXCHANGE</button>
-                <hr class="lobby-divider" style="margin: 6px 0;">
+                <button
+                    class="cashier-btn"
+                    onclick="buyChips()"
+                >
+                    EXCHANGE
+                </button>
 
-                <div class="cashier-row" style="margin-bottom:0;">
-                    <span class="cashier-label" style="font-size:15px;">CASH OUT:</span>
-                    <button class="cashier-btn" style="flex:1" onclick="cashOut()">SELL ALL CHIPS</button>
+                <hr
+                    class="lobby-divider"
+                    style="margin:6px 0;"
+                >
+
+                <!-- Cash out -->
+                <div
+                    class="cashier-row"
+                    style="margin-bottom:0;"
+                >
+                    <span
+                        class="cashier-label"
+                        style="font-size:15px;"
+                    >
+                        CASH OUT:
+                    </span>
+
+                    <button
+                        class="cashier-btn"
+                        style="flex:1"
+                        onclick="cashOut()"
+                    >
+                        SELL ALL CHIPS
+                    </button>
                 </div>
 
             </div>
 
-            <hr class="lobby-divider">
+        </div>
 
-          </div>
-        <!-- end lobby -->
-
-        <!-- second screen - slot machine -->
-         <div id="slots" class="screen">
-            <div style="background:#c0c0c0; padding: 4px 8px; border-bottom: 2px solid #808080; display:flex; align-items:center; gap:8px;">
-                <button class="back-btn" onclick="goToLobby()">◀ LOBBY</button>
-                <span style="color:#000; font-size:15px; letter-spacing:1px;">SLOT MACHINE</span>
+        <!-- Status bar -->
+        <div id="status-bar">
+            <div class="status-item">
+                💵 MONEY:
+                <div class="status-value">
+                    $<span id="money-display">100</span>
+                </div>
             </div>
 
-            <div class="slots-body">
-                <div class="machine-label">★ GOOD LUCK ★</div>
-
-                <!-- reels window -->
-                <div class="reels-window" id="reels-window">
-                    <div class="reel" id="reel-0">
-                        <div class="reel-symbol" id="sym-0">🍒</div>
-                    </div>
-                    <div class="reel" id="reel-1">
-                        <div class="reel-symbol" id="sym-1">🍒</div>
-                    </div>
-                    <div class="reel" id="reel-2">
-                        <div class="reel-symbol" id="sym-2">🍒</div>
-                    </div>
-                    <div class="payline"></div>
+            <div class="status-item">
+                CHIPS:
+                <div class="status-value">
+                    <span id="chips-display">0</span>
                 </div>
-
-                <div class="result-msg" id="result-msg">INSERT CHIPS TO PLAY</div>
-
-                <div class="bet-section">
-                    <div class="bet-row">
-                        <span class="bet-label">BET:</span>
-
-                        <button class="bet-btn" onclick="changeBet(-1)">-</button>
-                        <div class="bet-display" id="bet-display">1</div>
-                        <button class="bet-btn" onclick="changeBet(1)">+</button>
-                        <span class="bet-label" style="text-align:right; min-width:60px; font-size:14px;">CHIPS</span>
-                    </div>
-
-                </div>
-
-                <button class="spin-btn" id="spin-btn" onclick="spin()" disabled>▶SPIN◀</button>
             </div>
+        </div>
 
-            <!-- end machine-cabinet -->
-            <!-- paytable -->
-
-        <div class="paytable">
-            <div class="paytable-title">— PAY TABLE —</div>
-            <div class="paytable-row"><span>7️⃣ 7️⃣ 7️⃣</span><span>JACKPOT 50x</span></div>
-            <div class="paytable-row"><span>💎 💎 💎</span><span>BIG WIN 20x</span></div>
-            <div class="paytable-row"><span>🍋 🍋 🍋</span><span>WIN 10x</span></div>
-            <div class="paytable-row"><span>⭐ ⭐ ⭐</span><span>WIN 8x</span></div>
-            <div class="paytable-row"><span>🔔 🔔 🔔</span><span>WIN 5x</span></div>
-            <div class="paytable-row"><span>🍊 🍊 🍊</span><span>WIN 4x</span></div>
-            <div class="paytable-row"><span>🍇 🍇 🍇</span><span>WIN 3x</span></div>
-            <div class="paytable-row"><span>🍒 🍒 🍒</span><span>WIN 2x</span></div>
-            <div class="paytable-row"><span>🍒 🍒 _ </span><span>WIN 1x</span></div>
-        </div>
-         </div>
-         <!-- end slots-body -->
-        
-    <!-- ends slot screen -->
-
-    <!-- status bar -->
-    <div id="status-bar">
-        <div class="status-item">
-            <span style="color:#000; font-size:15px;">💵</span>
-            <span style="color:#000; font-size:15px;">MONEY:</span>
-            <div class="status-value">$<span id="money-display">100</span></div>
-        </div>
-        <div class="status-item">
-            <span style="color:#000; font-size:15px;">CHIPS:</span>
-            <div class="status-value"><span id="chips-display">0</span></div>
-        </div>
-        </div>
     </div>
 
-    <script src="script.js">
-    </script>
+<script src="js/state.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/lobby.js"></script>
+<script>
+loadState();
+updateUI();
+</script>
 </body>
+</html>

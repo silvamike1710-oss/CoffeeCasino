@@ -1,0 +1,633 @@
+  /* ============================================================
+     GLOBAL RESET & BASE STYLES
+     We zero out default margins/padding and set the base font.
+     VT323 is our retro pixel font — it looks perfect for Win95.
+  ============================================================ */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'VT323', monospace;
+    background: #1a0000;         /* Very dark red — the "desktop" background */
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    font-size: 18px;
+  }
+
+  /* ============================================================
+     THE APP CONTAINER
+     Simulates a mobile screen (380px wide) centered on the page.
+     Everything lives inside here.
+  ============================================================ */
+  #app {
+    width: 380px;
+    min-height: 100vh;
+    background: #c0c0c0;         /* Classic Win95 gray */
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ============================================================
+     WIN95 BORDER EFFECTS
+     .raised  → element appears to stick OUT (like a button)
+     .sunken  → element appears to go IN (like an input field)
+     These use 2 borders (top-left lighter, bottom-right darker)
+     to fake a 3D bevel effect, just like real Windows 95.
+  ============================================================ */
+  .raised {
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-bottom: 2px solid #808080;
+    border-right: 2px solid #808080;
+  }
+
+  .sunken {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-bottom: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+  }
+
+  /* ============================================================
+     WIN95 TITLE BAR
+     The classic colored bar at the top of every window.
+     We use deep red instead of blue to match our theme.
+  ============================================================ */
+  .title-bar {
+    background: linear-gradient(to right, #8b0000, #cc0000);
+    color: white;
+    padding: 4px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-family: 'VT323', monospace;
+    letter-spacing: 1px;
+  }
+
+  .title-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* The little icon in the title bar */
+  .title-icon {
+    font-size: 14px;
+  }
+
+  /* Win95-style window control buttons (minimize/close) */
+  .title-btn {
+    width: 18px;
+    height: 16px;
+    background: #c0c0c0;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #808080;
+    border-right: 2px solid #808080;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #000;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    margin-left: 2px;
+  }
+
+  /* ============================================================
+     SCREEN MANAGEMENT
+     We have two "screens": lobby and slot machine.
+     Only one is visible at a time. We toggle them with JS.
+  ============================================================ */
+  .screen {
+    display: none;               /* Hidden by default */
+    flex-direction: column;
+    min-height: calc(100vh - 28px);
+  }
+
+  .screen.active {
+    display: flex;               /* Shown when active */
+  }
+
+  /* ============================================================
+     STATUS BAR (bottom of screen)
+     Shows money and chips — always visible in both screens.
+  ============================================================ */
+  #status-bar {
+    background: #c0c0c0;
+    border-top: 2px solid #808080;
+    padding: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #000;
+    position: sticky;
+    bottom: 0;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* The actual number display — sunken like an input field */
+  .status-value {
+    background: #000;
+    color: #00ff00;              /* Green text like an old terminal */
+    padding: 1px 6px;
+    font-size: 16px;
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    min-width: 70px;
+    text-align: right;
+  }
+
+  /* ============================================================
+     LOBBY SCREEN STYLES
+  ============================================================ */
+  #lobby {
+    background: #c0c0c0;
+    padding: 0;
+  }
+
+  .lobby-header {
+    background: #8b0000;
+    padding: 20px 16px 16px;
+    text-align: center;
+    border-bottom: 3px solid #4a0000;
+  }
+
+  .lobby-title {
+    font-size: 42px;
+    color: #ffd700;              /* Gold — classic casino color */
+    text-shadow: 2px 2px #000;
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  .lobby-subtitle {
+    font-size: 18px;
+    color: #ffaaaa;
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  /* The decorative divider line between lobby sections */
+  .lobby-divider {
+    border: none;
+    border-top: 2px solid #808080;
+    border-bottom: 2px solid #fff;
+    margin: 0;
+  }
+
+  .lobby-section-title {
+    background: #000080;         /* Dark blue — Win95 section header */
+    color: #fff;
+    padding: 3px 10px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin: 10px 10px 6px;
+  }
+
+  /* Grid of game icons */
+  .games-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 10px 10px;
+  }
+
+  /* Each game card in the lobby */
+  .game-card {
+    background: #c0c0c0;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #808080;
+    border-right: 2px solid #808080;
+    transition: none;
+    user-select: none;
+    color: #000;
+  }
+
+  /* When you click a card, it looks "pressed" by inverting the borders */
+  .game-card:active {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+  }
+
+  .game-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .game-icon {
+    font-size: 40px;
+    line-height: 1.2;
+    display: block;
+  }
+
+  .game-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 4px;
+    color: #000;
+    letter-spacing: 1px;
+  }
+
+  .game-badge {
+    display: inline-block;
+    background: #008000;
+    color: #fff;
+    font-size: 12px;
+    padding: 0 5px;
+    margin-top: 3px;
+  }
+
+  .game-badge.soon {
+    background: #808080;
+  }
+
+  /* ============================================================
+     CASHIER WINDOW (inside lobby)
+     The money-to-chips exchange panel.
+  ============================================================ */
+  .cashier-window {
+    margin: 0 10px 10px;
+    background: #c0c0c0;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #808080;
+    border-right: 2px solid #808080;
+    padding: 8px;
+  }
+
+  .cashier-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+    font-size: 16px;
+    color: #000;
+  }
+
+  .cashier-label {
+    min-width: 80px;
+    color: #000;
+  }
+
+  /* The dropdown selector for how many chips to buy */
+  .cashier-select {
+    flex: 1;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    background: #fff;
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    padding: 2px 4px;
+    color: #000;
+  }
+
+  .cashier-btn {
+    width: 100%;
+    padding: 5px;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    background: #c0c0c0;
+    color: #000;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #808080;
+    border-right: 2px solid #808080;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .cashier-btn:active {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+  }
+
+  /* Small notification message after a cashier action */
+  .cashier-msg {
+    font-size: 15px;
+    min-height: 20px;
+    color: #8b0000;
+    text-align: center;
+    font-family: 'VT323', monospace;
+  }
+
+  /* ============================================================
+     SLOT MACHINE SCREEN STYLES
+  ============================================================ */
+  #slots {
+    background: #1a0000;
+    padding: 0;
+  }
+
+  .slots-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 10px;
+    gap: 10px;
+  }
+
+  /* The big slot machine cabinet */
+  .machine-cabinet {
+    width: 100%;
+    background: #8b0000;
+    border-top: 4px solid #cc4444;
+    border-left: 4px solid #cc4444;
+    border-bottom: 4px solid #4a0000;
+    border-right: 4px solid #4a0000;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .machine-label {
+    font-size: 28px;
+    color: #ffd700;
+    text-shadow: 1px 1px #000, -1px -1px #000;
+    letter-spacing: 4px;
+    text-align: center;
+  }
+
+  /* The reels area — the sunken box where symbols appear */
+  .reels-window {
+    width: 100%;
+    background: #000;
+    border-top: 4px solid #4a0000;
+    border-left: 4px solid #4a0000;
+    border-bottom: 4px solid #cc4444;
+    border-right: 4px solid #cc4444;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 4px;
+    gap: 4px;
+  }
+
+  /* One reel column */
+  .reel {
+    flex: 1;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111;
+    border: 2px solid #333;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* The symbol inside a reel */
+  .reel-symbol {
+    font-size: 52px;
+    line-height: 1;
+    transition: none;
+    user-select: none;
+  }
+
+  /* "Spinning" animation: symbols blur and scroll up */
+  .reel.spinning .reel-symbol {
+    animation: spinReel 0.1s linear infinite;
+  }
+
+  @keyframes spinReel {
+    0%   { transform: translateY(0px); opacity: 1; }
+    49%  { transform: translateY(-30px); opacity: 0; }
+    50%  { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0px); opacity: 1; }
+  }
+
+  /* The center "payline" — the horizontal line across all reels */
+  .payline {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ffd70066;      /* Semi-transparent gold line */
+    pointer-events: none;
+  }
+
+  /* When we WIN, flash the reels gold */
+  .reels-window.win-flash {
+    animation: winFlash 0.3s ease-in-out 3;
+  }
+
+  @keyframes winFlash {
+    0%, 100% { border-color: #4a0000; background: #000; }
+    50%       { border-color: #ffd700; background: #2a2000; }
+  }
+
+  /* ============================================================
+     BET CONTROLS
+  ============================================================ */
+  .bet-section {
+    width: 100%;
+    background: #700000;
+    border-top: 2px solid #cc4444;
+    border-left: 2px solid #cc4444;
+    border-bottom: 2px solid #4a0000;
+    border-right: 2px solid #4a0000;
+    padding: 8px 10px;
+  }
+
+  .bet-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .bet-label {
+    color: #ffd700;
+    font-size: 16px;
+    min-width: 50px;
+  }
+
+  .bet-display {
+    background: #000;
+    color: #ffd700;
+    font-size: 22px;
+    padding: 2px 10px;
+    border-top: 2px solid #333;
+    border-left: 2px solid #333;
+    border-bottom: 2px solid #666;
+    border-right: 2px solid #666;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  /* +/- buttons for adjusting bet */
+  .bet-btn {
+    width: 36px;
+    height: 30px;
+    font-family: 'VT323', monospace;
+    font-size: 22px;
+    background: #c0c0c0;
+    color: #000;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #808080;
+    border-right: 2px solid #808080;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bet-btn:active {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+  }
+
+  /* ============================================================
+     SPIN BUTTON — the big main button
+  ============================================================ */
+  .spin-btn {
+    width: 100%;
+    padding: 10px;
+    font-family: 'VT323', monospace;
+    font-size: 28px;
+    background: #cc0000;
+    color: #ffd700;
+    border-top: 3px solid #ff6666;
+    border-left: 3px solid #ff6666;
+    border-bottom: 3px solid #660000;
+    border-right: 3px solid #660000;
+    cursor: pointer;
+    letter-spacing: 4px;
+    text-shadow: 1px 1px #000;
+    margin-top: 4px;
+    transition: background 0.1s;
+  }
+
+  .spin-btn:active:not(:disabled) {
+    border-top: 3px solid #660000;
+    border-left: 3px solid #660000;
+    border-bottom: 3px solid #ff6666;
+    border-right: 3px solid #ff6666;
+    background: #aa0000;
+  }
+
+  .spin-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* ============================================================
+     RESULT MESSAGE
+     Shows win/loss text below the reels.
+  ============================================================ */
+  .result-msg {
+    font-size: 22px;
+    text-align: center;
+    min-height: 32px;
+    color: #ffd700;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px #000;
+  }
+
+  /* ============================================================
+     PAYTABLE (win combinations reference)
+  ============================================================ */
+  .paytable {
+    width: 100%;
+    background: #2a0000;
+    border: 2px solid #660000;
+    padding: 6px 8px;
+  }
+
+  .paytable-title {
+    color: #ffd700;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #660000;
+    margin-bottom: 4px;
+    padding-bottom: 2px;
+  }
+
+  .paytable-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #ffaaaa;
+    line-height: 1.4;
+  }
+
+  .paytable-row span:last-child {
+    color: #ffd700;
+  }
+
+  /* ============================================================
+     BACK BUTTON
+  ============================================================ */
+  .back-btn {
+    display: inline-block;
+    padding: 3px 10px;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    background: #c0c0c0;
+    color: #000;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #808080;
+    border-right: 2px solid #808080;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+
+  .back-btn:active {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+  }
+
+  /* Toast notification for cashier messages */
+  #toast {
+    position: fixed;
+    top: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000080;
+    color: #fff;
+    padding: 4px 14px;
+    font-family: 'VT323', monospace;
+    font-size: 17px;
+    letter-spacing: 1px;
+    display: none;
+    z-index: 999;
+    white-space: nowrap;
+    border-top: 2px solid #4444ff;
+    border-left: 2px solid #4444ff;
+    border-bottom: 2px solid #000044;
+    border-right: 2px solid #000044;
+  }
